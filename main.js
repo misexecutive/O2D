@@ -20,6 +20,34 @@ function showSuccessNotification(message) {
   setTimeout(() => note.classList.add('hidden'), 3000);
 }
 
+function renderOrders() {
+  const container = document.getElementById('ordersContainer');
+  container.innerHTML = '';
+
+  if (!ordersData || ordersData.length === 0) {
+    showNoData();
+    return;
+  }
+
+  ordersData.forEach((order, index) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded shadow';
+    card.innerHTML = `
+      <h3 class="text-lg font-bold mb-2">${order.dealerName}</h3>
+      <p><strong>Location:</strong> ${order.location}</p>
+      <p><strong>Marketing Person:</strong> ${order.marketingPersonName}</p>
+      <p><strong>CRM:</strong> ${order.crmName}</p>
+      <p><strong>Concerned Owner:</strong> ${order.concernedOwner}</p>
+      <p><a href="${order.fileUploadLink}" target="_blank" class="text-blue-500 underline">View File</a></p>
+      <p class="text-xs text-gray-500 mt-2">Timestamp: ${new Date(order.timestamp).toLocaleString()}</p>
+    `;
+    container.appendChild(card);
+  });
+
+  container.classList.remove('hidden');
+  document.getElementById('noDataContainer').classList.add('hidden');
+}
+
 async function fetchOrders() {
   showLoading(true);
   const crm = new URLSearchParams(location.search).get('crm');
