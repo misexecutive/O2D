@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Order Management</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+      <h1 class="text-3xl font-bold">Sales Order Management</h1>
+      <div class="flex items-center space-x-4">
+        <span id="currentTime" class="text-sm opacity-90"></span>
+        <button onclick="refreshData()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2">
+          <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <div id="loadingContainer" class="flex justify-center items-center py-20">
+      <div class="loading-spinner w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+    </div>
+
+    <div id="ordersContainer" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 hidden">
+      <!-- Orders will be populated here -->
+    </div>
+
+    <div id="noDataContainer" class="text-center py-20 hidden">
+      <div class="text-gray-400 text-6xl mb-4">📋</div>
+      <h3 class="text-xl font-semibold text-gray-600 mb-2">No Orders Found</h3>
+      <p class="text-gray-500">No sales orders are currently available.</p>
+    </div>
+  </main>
+
+  <!-- Stock Status Modal -->
+  <div id="stockModal" class="fixed inset-0 modal-overlay z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Stock Status Remark</h3>
+        <p class="text-gray-600 mb-4">Please provide a remark for the stock status:</p>
+        <input type="text" id="stockRemark" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter stock remark..." maxlength="50">
+        <div class="text-xs text-gray-500 mt-1">Maximum 50 characters</div>
+        <div class="flex justify-end space-x-3 mt-6">
+          <button onclick="closeStockModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">Cancel</button>
+          <button id="stockSubmitBtn" onclick="submitStockStatus()" class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div id="successNotification" class="fixed top-4 right-4 z-50 bg-green-100 text-green-700 px-4 py-3 rounded-lg shadow hidden">
+    <div class="flex items-center space-x-2">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+      </svg>
+      <span id="successMessage">Action completed successfully!</span>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="main.js"></script>
+</body>
+</html>
